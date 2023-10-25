@@ -33,14 +33,14 @@ Proyek ini didasarkan pada dataset yang diambil dari kaggle perihal estimasi har
 
 ### Variabel-variabel pada Mobile Price Prediction Dataset adalah sebagai berikut:
 Jenis inputan type data pada dataset ini yakni integer, kecuali untuk resolusi dan kecepatan CPU
-RAM = Kapasitas RAM (GB)
-Cpu_Core = Jumlah Core CPU
-Internal = Total Memory Internal (GB)
-Battery = Kapasitas Baterai (mAh)
-FrontCam = Kamera Depan (Mega Pixels)
-RearCam = Kamera Belakang (Mega Pixels)
-Resolution = Ukuran Layar (INCH)
-Cpu_Freq = Kecepatan CPU (Ghz)
+- RAM = Kapasitas RAM (GB)
+- Cpu_Core = Jumlah Core CPU
+- Internal = Total Memory Internal (GB)
+- Battery = Kapasitas Baterai (mAh)
+- FrontCam = Kamera Depan (Mega Pixels)
+- RearCam = Kamera Belakang (Mega Pixels)
+- Resolution = Ukuran Layar (INCH)
+- Cpu_Freq = Kecepatan CPU (Ghz)
 
 ## Data Preparation
 Pertama tama kita import dulu library python yang ingin di gunakan
