@@ -20,4 +20,4 @@ if st.button('Estimasi'):
     predict = ponsel_model.predict(
         [[RAM, Cpu_Core, Internal, Battery, FrontCam, RearCam, Resolution, Cpu_Freq]]
     )
-    st.write ('Estimasi harga : ', predict*1000000)
+    st.write ('Estimasi harga : ', predict*1000)
