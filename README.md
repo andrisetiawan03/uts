@@ -27,53 +27,117 @@ Dengan adanya model machine learning ini di harapkan kita terhindar dari hal ter
   - Proses pengkalkulasian di lakukan berdasarkan estimasi data yang di sajikan berdasarkan rincian spesifikasinya
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. dataset wajib menggunakan [kaggle](https://www.kaggle.com/) dan **atribut yang digunakan minimal 8 atribut**. Sertakan juga sumber atau tautan untuk mengunduh dataset.<br> 
+Proyek ini didasarkan pada dataset yang diambil dari kaggle perihal estimasi harga ponsel berdasarkan rincian spesifikasinya. Untuk dataset nya bisa di ambil disini<br>
 
-Contoh: [Heart Failure Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).
+[Ponsel Price](https://www.kaggle.com/datasets/mohannapd/mobile-price-prediction).
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
-
-### Variabel-variabel pada Heart Failure Prediction Dataset adalah sebagai berikut:
-- Age : merupakan umur pasien dalam satuan tahun.
-- Sex : merupakan jenis kelamin pasien meliputi [M: Male, F: Female].
-- dst
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+### Variabel-variabel pada Mobile Price Prediction Dataset adalah sebagai berikut:
+Jenis inputan type data pada dataset ini yakni integer, kecuali untuk resolusi dan kecepatan CPU
+RAM = Kapasitas RAM (GB)
+Cpu_Core = Jumlah Core CPU
+Internal = Total Memory Internal (GB)
+Battery = Kapasitas Baterai (mAh)
+FrontCam = Kamera Depan (Mega Pixels)
+RearCam = Kamera Belakang (Mega Pixels)
+Resolution = Ukuran Layar (INCH)
+Cpu_Freq = Kecepatan CPU (Ghz)
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pertama tama kita import dulu library python yang ingin di gunakan
+```bash
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from warnings import filterwarnings
+filterwarnings('ignore')
+```
+Selanjutnya kita buka dataset nya
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+```bash
+df = pd.read_csv('mobile-price-prediction/Cellphone.csv')
+df.head()
+```
+Dengan perintad di atas maka dataset akan otomatis terbaca dan akan menampilkan 5 kolom awal.
+Selanjutnya bisa kita cek untuk dataset nya berapa jumlah baris dan kolomnya
+
+```bash
+df.shape
+```
+```bash
+(161, 14)
+```
+nah bisa dilihat jika dataset tersebut terdiri dari 161 baris dan 14 kolom
+
+Selanjutnya kita bisa visualisasikan data tersebut dengan sebuah grafik, kita bisa tuliskan
+```bash
+plt.figure(figsize=(20,15))
+j = 1
+for i in df.iloc[:,:-1].columns:
+    plt.subplot(5,3,j)
+    sns.histplot(df[i], stat = "density", kde = True , color = "red")
+    j+=1
+plt.show()
+```
+Maka akan muncul
+![alt text](https://github.com/andrisetiawan03/uts/blob/main/grafik.png)
+
+Jika sudah selesai pada tahapan ini maka proses bisa dilanjutkan dengan membuat algoritma permodelan
+
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Model yang digunakan adalah model regresi linear, karena output dari proyek ini adalah sebuah estimasi<br>
+Pertama bisa kita simpan dulu untuk nilai X dan Y nya
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+```bash
+features = ['ram','cpu core','internal mem','battery','Front_Cam','RearCam','resoloution','cpu freq']
+x = df[features]
+y = df['Price']
+x.shape, y.shape
+```
+Nah, sudah di lihat diatas untuk nilai X nya apa saja dan nilai Y nya hanya kolom Price.
+Selanjutnya bisa dilanjutkan dengan melakukan data training sebanyak 70%
+```bash
+x_train, X_test, y_train, y_test = train_test_split(x,y,random_state=70)
+y_test.shape
+```
+Jika sudah selesai maka bisa di lanjutkan dengan memasukan rumus regresi linear nya
+
+```bash
+lr = LinearRegression()
+lr.fit(x_train,y_train)
+pred = lr.predict(X_test)
+```
+nah jika sudah sampai pada tahap ini maka proses modeling sudah selesai dan bisa dilakukan pengetesan melalui inputan data array
+```bash
+input_data = np.array([[12,8,128,5000,14,56,5.1,3.6]])
+
+prediction = lr.predict(input_data)
+print('Estimasi harga ponsel :', prediction)
+```
+Nah nanti akan keluar untuk estimasinya.
+Jika sudah selesai, maka kita bisa import model ini dengan menggunakan pickle
+```bash
+import pickle
+filename = 'estimasi_harga_HP.sav'
+pickle.dump(lr,open(filename,'wb'))
+```
+Maka model yang tadi akan tersave dalam estimasi_harga_HP.sav yang bisa kita sambungkan ke file tampilan streamlit
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
-
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
-
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+Proses Evaluasi menggunakan metode Akurasi
+```bash
+score = lr.score(X_test, y_test)
+print('akurasi model regresi linier = ', score)
+```
+maka akan muncul
+```bash
+akurasi model regresi linier =  0.9171990085700209
+```
+Diperoleh tingkat akurasinya 91%, untuk model regreai linear saya rasa cocok untuk menggunakan nilai acuan akurasi. Apalagi ketika akurasinya sudah diatas 70%.
 
 ## Deployment
-pada bagian ini anda memberikan link project yang diupload melalui streamlit share. boleh ditambahkan screen shoot halaman webnya.
-
-**---Ini adalah bagian akhir laporan---**
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
-
+[Link Streamlit untuk Project UTS](https://estimasiponsel.streamlit.app/)
+![alt text](https://github.com/andrisetiawan03/uts/blob/main/tampilan.png)
