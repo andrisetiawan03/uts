@@ -13,6 +13,10 @@ FrontCam = st.number_input('Kamera Depan (Mega Pixels)')
 RearCam = st.number_input('Kamera Belakang (Mega Pixels)')
 Resolution = st.number_input('Ukuran Layar (INCH)')
 Cpu_Freq = st.number_input('Kecepatan CPU (Ghz)')
+Sale = st.number_input('Jumlah Penjualan harian (Unit)')
+Weight = st.number_input('Berat Device (Grams)')
+PPI = st.number_input('Tingkat Kepadatan Pixels (ppi)')
+Thickness = st.number_input('Ketebalan Device (Mm)')
 
 predict = ''
 
