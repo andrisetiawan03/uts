@@ -39,13 +39,13 @@ Jenis inputan type data pada dataset ini yakni integer, kecuali untuk resolusi d
 - resoloution = tingkat resolusi (float64)
 - ppi = tingkat kepadatan pixels (int64)  
 - cpu core = jumlah core cpu (int64 ) 
- 7   cpu freq      161 non-null    float64
- 8   internal mem  161 non-null    float64
- 9   ram           161 non-null    float64
- 10  RearCam       161 non-null    float64
- 11  Front_Cam     161 non-null    float64
- 12  battery       161 non-null    int64  
- 13  thickness
+- cpu freq = kecepatan cpu (float64)
+- internal mem = kapasitas memori internal (float64)
+- ram = kapasitas ram (float64)
+- RearCam = resolusi kamera bealakang (float64)
+- Front_Cam = resolusi kamera depan (float64)
+- battery = kapasitas baterai (int64)  
+- thickness = ketebalan device (float64)
 
 ## Data Preparation
 Pertama tama kita import dulu library python yang ingin di gunakan
