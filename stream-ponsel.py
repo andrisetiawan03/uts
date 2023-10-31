@@ -22,6 +22,6 @@ predict = ''
 
 if st.button('Estimasi'):
     predict = ponsel_model.predict(
-        [[RAM, Cpu_Core, Internal, Battery, FrontCam, RearCam, Resolution, Cpu_Freq]]
+        [[RAM, Cpu_Core, Internal, Battery, FrontCam, RearCam, Resolution, Cpu_Freq, Sale, Weight, PPI, Thickness]]
     )
     st.write ('Estimasi harga dalam hitungan Juta : ', predict*1000)
