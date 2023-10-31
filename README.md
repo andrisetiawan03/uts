@@ -82,7 +82,8 @@ for i in df.iloc[:,:-1].columns:
 plt.show()
 ```
 Maka akan muncul
-![alt text](https://github.com/andrisetiawan03/uts/blob/main/grafik.png)
+![grafik](https://github.com/andrisetiawan03/uts/assets/148999404/0fdb8277-6e90-457d-94d5-71de3d7fad1a)
+
 
 Jika sudah selesai pada tahapan ini maka proses bisa dilanjutkan dengan membuat algoritma permodelan
 
