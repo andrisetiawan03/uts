@@ -33,14 +33,19 @@ Proyek ini didasarkan pada dataset yang diambil dari kaggle perihal estimasi har
 
 ### Variabel-variabel pada Mobile Price Prediction Dataset adalah sebagai berikut:
 Jenis inputan type data pada dataset ini yakni integer, kecuali untuk resolusi dan kecepatan CPU
-- RAM = Kapasitas RAM (GB)
-- Cpu_Core = Jumlah Core CPU
-- Internal = Total Memory Internal (GB)
-- Battery = Kapasitas Baterai (mAh)
-- FrontCam = Kamera Depan (Mega Pixels)
-- RearCam = Kamera Belakang (Mega Pixels)
-- Resolution = Ukuran Layar (INCH)
-- Cpu_Freq = Kecepatan CPU (Ghz)
+- Price = Harga dari device tersebut (int64) 
+- Sale = Tingkat penjualan device tersebut (int64)  
+- weight = Berat device tersebut (float64)
+- resoloution = tingkat resolusi (float64)
+- ppi = tingkat kepadatan pixels (int64)  
+- cpu core = jumlah core cpu (int64 ) 
+ 7   cpu freq      161 non-null    float64
+ 8   internal mem  161 non-null    float64
+ 9   ram           161 non-null    float64
+ 10  RearCam       161 non-null    float64
+ 11  Front_Cam     161 non-null    float64
+ 12  battery       161 non-null    int64  
+ 13  thickness
 
 ## Data Preparation
 Pertama tama kita import dulu library python yang ingin di gunakan
@@ -83,6 +88,18 @@ plt.show()
 ```
 Maka akan muncul
 ![grafik](https://github.com/andrisetiawan03/uts/assets/148999404/0fdb8277-6e90-457d-94d5-71de3d7fad1a)
+
+atau kita visualisasi kan dengan heat map
+```bash
+plt.figure(figsize=(8,8))
+corr = df.drop(["Product_id"], axis =1 ).corr()
+mask = np.zeros_like(corr)
+mask[np.triu_indices_from(mask)] = True
+sns.heatmap(corr, mask=mask, linewidths=.5, annot=True)
+plt.show()
+```
+![output](https://github.com/andrisetiawan03/uts/assets/148999404/ea48237d-f512-464c-a505-1cf58a4e14e0)
+
 
 
 Jika sudah selesai pada tahapan ini maka proses bisa dilanjutkan dengan membuat algoritma permodelan
